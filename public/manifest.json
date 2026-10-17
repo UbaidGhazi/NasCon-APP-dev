@@ -1,0 +1,17 @@
+{
+  "name": "SportsPlus",
+  "short_name": "SportsPlus",
+  "description": "Multi-Sport League & Club Operations Mobile App",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1565C0",
+  "theme_color": "#1565C0",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
