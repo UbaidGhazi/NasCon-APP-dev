@@ -2,741 +2,646 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SportsPlus — Sports Management Platform</title>
-  <meta name="description" content="SportsPlus Multi-Sport League & Club Operations Mobile & Web Application">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SportsPlus</title>
+  <meta name="description" content="SportsPlus Multi-Sport League & Club Operations Mobile App">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Top Global Bar (Device Switcher, Network Simulator & Settings) -->
-  <header class="top-control-bar" id="topControlBar">
-    <div class="control-left">
-      <div class="logo-mini">
-        <svg viewBox="0 0 40 40" width="28" height="28">
-          <circle cx="20" cy="20" r="19" fill="#ffffff" />
-          <path d="M12 24 C12 16, 22 13, 26 10 C24 16, 17 19, 14 26 Z" fill="#1976d2" />
-          <path d="M28 16 C28 24, 18 27, 14 30 C16 24, 23 21, 26 14 Z" fill="#8bc34a" />
-        </svg>
-        <span class="brand-text"><strong>sports</strong><span>plus</span></span>
-      </div>
-      <div class="connection-chip" id="connectionChip" title="Click to toggle Airplane Mode">
-        <span class="status-dot online" id="statusDot"></span>
-        <span id="connectionText">ONLINE</span>
-      </div>
-      <button class="airplane-toggle-btn" id="airplaneToggleBtn" title="Simulate Offline/Airplane Mode">
-        <span id="airplaneIcon">✈️</span> <span id="airplaneLabel">Airplane Mode</span>
-      </button>
+  <!-- Clean Root Mobile Container -->
+  <div class="mobile-app-root">
+    
+    <!-- Status / Connectivity Banner (Shown only when offline or syncing) -->
+    <div class="offline-sync-banner" id="offlineSyncBanner" style="display:none;">
+      <span class="banner-icon" id="bannerIcon">✈️</span>
+      <span class="banner-text" id="bannerText">Offline mode — Changes saved locally and will sync when online.</span>
+      <button class="banner-sync-btn" id="bannerSyncBtn">Sync</button>
     </div>
 
-    <div class="control-right">
-      <div class="role-selector-wrap">
-        <label for="roleSelect">Role:</label>
-        <select id="roleSelect" class="role-select">
-          <option value="player">🏃 Player (Darel Mitchel)</option>
-          <option value="club_manager">👔 Club Manager</option>
-          <option value="league_organizer">📋 League Organizer</option>
-          <option value="super_admin">👑 Super Admin</option>
-          <option value="viewer">👁️ General Viewer</option>
-        </select>
-      </div>
+    <!-- MAIN APP SCREEN CONTAINER -->
+    <main class="app-main-viewport" id="appViewport">
+      
+      <!-- ================= 1. LOGIN SCREEN (Screenshot 1) ================= -->
+      <section class="screen-view" id="screenLogin">
+        <header class="native-app-bar light">
+          <button class="nav-back-icon" id="loginBackBtn" aria-label="Back">‹</button>
+          <h1 class="native-bar-title">Login</h1>
+          <div class="bar-spacer"></div>
+        </header>
 
-      <button class="icon-btn" id="syncStatusBtn" title="Offline Queue & Sync">
-        <span class="btn-icon">🔄</span>
-        <span class="queue-badge" id="queueBadge" style="display:none;">0</span>
-      </button>
-
-      <button class="frame-toggle-btn" id="frameToggleBtn" title="Toggle Phone / Responsive View">
-        📱 Frame Mode
-      </button>
-
-      <button class="reset-db-btn" id="resetDbBtn" title="Reset Database to Baseline">
-        Reset Data
-      </button>
-    </div>
-  </header>
-
-  <!-- Main View Container (Center phone mockup or full width) -->
-  <main class="app-viewport frame-mode" id="appViewport">
-    <div class="phone-device-frame" id="phoneDevice">
-      <!-- Phone Bezel Details -->
-      <div class="phone-speaker"></div>
-      <div class="phone-camera"></div>
-
-      <!-- Phone Screen Container -->
-      <div class="phone-screen" id="phoneScreen">
-        <!-- System Status Bar -->
-        <div class="system-status-bar" id="systemStatusBar">
-          <span class="status-time" id="statusTime">10:04</span>
-          <div class="status-icons">
-            <span class="net-icon">📶 5G</span>
-            <span class="wifi-icon">🛜</span>
-            <span class="battery-icon">🔋 78%</span>
+        <div class="login-curved-banner">
+          <div class="watermark-pattern"></div>
+          <div class="sportsplus-emblem-badge">
+            <svg viewBox="0 0 100 100" class="logo-svg" width="86" height="86">
+              <defs>
+                <linearGradient id="loginBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1e88e5"/>
+                  <stop offset="100%" stop-color="#1565c0"/>
+                </linearGradient>
+                <linearGradient id="loginGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#9ccc65"/>
+                  <stop offset="100%" stop-color="#689f38"/>
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="48" fill="#ffffff" filter="drop-shadow(0 4px 12px rgba(0,0,0,0.12))"/>
+              <path d="M30 60 C30 40, 56 34, 66 26 C62 42, 44 48, 36 66 Z" fill="url(#loginBlueGrad)"/>
+              <path d="M70 40 C70 60, 44 66, 34 74 C38 58, 56 52, 64 34 Z" fill="url(#loginGreenGrad)"/>
+              <circle cx="50" cy="50" r="7" fill="#ffffff"/>
+            </svg>
           </div>
         </div>
 
-        <!-- APP CONTENT AREA -->
-        <div class="screen-content-area" id="screenContentArea">
+        <div class="login-branding">
+          <h2 class="sports-brand-logo"><span class="logo-blue">sports</span><span class="logo-green">plus</span></h2>
+          <p class="sports-brand-tagline">SPORTS MANAGEMENT PLATFORM</p>
+        </div>
+
+        <form class="login-form" id="loginForm" onsubmit="return false;">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" value="player@nascon.test" placeholder="name@domain.com" required>
+          </div>
           
-          <!-- ================= SCREEN 1: LOGIN ================= -->
-          <section class="screen-view active" id="screenLogin">
-            <div class="login-header-bar">
-              <button class="header-back-btn" id="loginBackBtn">‹</button>
-              <h1 class="header-title-text">Login</h1>
-              <div class="header-spacer"></div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" value="Nascon@26" placeholder="••••••••" required>
+          </div>
+
+          <div class="demo-account-pills">
+            <span class="pills-label">Switch Demo Account:</span>
+            <div class="pills-scroll">
+              <button type="button" class="pill-btn active" data-role="player" data-email="player@nascon.test">Player</button>
+              <button type="button" class="pill-btn" data-role="club_manager" data-email="manager@nascon.test">Manager</button>
+              <button type="button" class="pill-btn" data-role="league_organizer" data-email="organizer@nascon.test">Organizer</button>
+              <button type="button" class="pill-btn" data-role="super_admin" data-email="admin@nascon.test">Admin</button>
+              <button type="button" class="pill-btn" data-role="viewer" data-email="viewer@nascon.test">Viewer</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary-login" id="doLoginBtn">
+            <span>LOGIN</span>
+            <span class="arrow-icon">➔</span>
+          </button>
+        </form>
+
+        <div class="kids-sports-illustration">
+          <svg viewBox="0 0 320 100" class="kids-vector" width="100%" height="95">
+            <!-- Kid 1: Tennis -->
+            <circle cx="55" cy="40" r="10" fill="#6d4c41"/>
+            <circle cx="55" cy="40" r="9" fill="#ffcc80"/>
+            <path d="M48 35 Q55 25 62 35" fill="#3e2723"/>
+            <path d="M47 50 L63 50 L60 76 L50 76 Z" fill="#26a69a"/>
+            <line x1="60" y1="52" x2="72" y2="38" stroke="#ffcc80" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="75" cy="34" rx="7" ry="11" fill="none" stroke="#546e7a" stroke-width="2"/>
+            <circle cx="78" cy="44" r="5" fill="#cddc39"/>
+            
+            <!-- Kid 2: Soccer -->
+            <circle cx="110" cy="42" r="10" fill="#ffa726"/>
+            <circle cx="110" cy="42" r="9" fill="#ffe0b2"/>
+            <path d="M103 52 L117 52 L115 76 L105 76 Z" fill="#1e88e5"/>
+            <circle cx="124" cy="68" r="9" fill="#ffffff" stroke="#263238" stroke-width="1.5"/>
+            <polygon points="124,64 121,68 127,68" fill="#263238"/>
+
+            <!-- Kid 3: Basketball -->
+            <circle cx="165" cy="38" r="10" fill="#3e2723"/>
+            <circle cx="165" cy="38" r="9" fill="#ffcc80"/>
+            <path d="M158 48 L172 48 L170 74 L160 74 Z" fill="#ffffff"/>
+            <circle cx="165" cy="22" r="10" fill="#ff7043" stroke="#d84315" stroke-width="1.5"/>
+            <line x1="155" y1="22" x2="175" y2="22" stroke="#d84315" stroke-width="1.2"/>
+            <line x1="165" y1="12" x2="165" y2="32" stroke="#d84315" stroke-width="1.2"/>
+
+            <!-- Kid 4: Football -->
+            <circle cx="215" cy="40" r="10" fill="#4e342e"/>
+            <circle cx="215" cy="40" r="9" fill="#d7ccc8"/>
+            <path d="M208 50 L222 50 L220 74 L210 74 Z" fill="#eceff1"/>
+            <ellipse cx="215" cy="74" rx="6" ry="10" fill="#8d6e63" stroke="#4e342e" stroke-width="1.5"/>
+            <line x1="215" y1="67" x2="215" y2="81" stroke="#ffffff" stroke-width="1.5"/>
+
+            <!-- Kid 5: Baseball -->
+            <circle cx="265" cy="40" r="10" fill="#212121"/>
+            <circle cx="265" cy="40" r="9" fill="#ffe0b2"/>
+            <path d="M258 50 L272 50 L270 76 L260 76 Z" fill="#1565c0"/>
+            <path d="M276 44 Q284 46 280 54 Q273 52 276 44 Z" fill="#8d6e63"/>
+          </svg>
+        </div>
+
+        <div class="login-footer">
+          <a href="https://sportsplus.app" target="_blank" rel="noopener">https://sportsplus.app</a>
+        </div>
+      </section>
+
+      <!-- ================= 2. MEMBER DASHBOARD (Screenshot 2) ================= -->
+      <section class="screen-view active" id="screenDashboard">
+        <!-- Curved Blue Header -->
+        <div class="member-curved-hero">
+          <div class="hero-top-row">
+            <button class="hero-btn" id="dashMenuBtn" aria-label="Open Menu">☰</button>
+            <div class="hero-right-actions">
+              <div class="hero-bell-wrap" id="dashNotificationBtn">
+                🔔<span class="hero-bell-badge">66</span>
+              </div>
+              <button class="hero-btn" id="dashOptionsBtn" aria-label="Settings">⋮</button>
+            </div>
+          </div>
+
+          <div class="hero-user-profile">
+            <div class="hero-avatar-ring">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="User avatar" class="hero-avatar-photo" id="memberAvatar">
+            </div>
+            <h2 class="hero-user-name" id="memberName">Darel Mitchel</h2>
+            <div class="hero-user-tag" id="memberRoleBadge">Player • South Cardos</div>
+          </div>
+        </div>
+
+        <div class="dashboard-scroll-area">
+          <!-- Updates Card -->
+          <div class="card updates-card">
+            <div class="card-title-row">
+              <div class="title-with-icon">
+                <span class="card-icon-emoji">📰</span>
+                <span class="card-heading">Updates</span>
+              </div>
+              <button class="collapse-icon-btn" id="updatesCollapseBtn">▲</button>
+            </div>
+            <div class="updates-body" id="updatesBody">
+              <span class="flash-icon">⚡</span>
+              <span class="updates-msg">New season about to kickoff</span>
+            </div>
+          </div>
+
+          <!-- Next Game Section -->
+          <div class="section-heading-row">
+            <span class="sec-emoji">🏀</span>
+            <h3 class="sec-heading-text">Next Game</h3>
+          </div>
+
+          <div class="card next-game-card">
+            <div class="next-game-top">
+              <span class="ball-emoji">🏀</span>
+              <strong class="game-team-title">South Cardos (Home)</strong>
+              <button class="btn-rsvp-pill" id="rsvpBtn">RSVP</button>
             </div>
 
-            <div class="login-banner-container">
-              <div class="sports-ball-pattern"></div>
-              <div class="brand-logo-card">
-                <svg viewBox="0 0 100 100" class="brand-logo-svg" width="84" height="84">
-                  <defs>
-                    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#1e88e5"/>
-                      <stop offset="100%" stop-color="#1565c0"/>
-                    </linearGradient>
-                    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#9ccc65"/>
-                      <stop offset="100%" stop-color="#689f38"/>
-                    </linearGradient>
-                  </defs>
-                  <circle cx="50" cy="50" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.12))"/>
-                  <path d="M30 60 C30 40, 56 34, 66 26 C62 42, 44 48, 36 66 Z" fill="url(#blueGrad)"/>
-                  <path d="M70 40 C70 60, 44 66, 34 74 C38 58, 56 52, 64 34 Z" fill="url(#greenGrad)"/>
-                  <circle cx="50" cy="50" r="7" fill="#ffffff"/>
-                </svg>
-              </div>
+            <div class="game-timing-row">
+              <span class="date-text">Friday, 07 April</span>
+              <span class="time-text">09:00 AM - 10:00 AM</span>
             </div>
 
-            <div class="login-brand-title">
-              <h2 class="sports-title"><span class="c-blue">sports</span><span class="c-green">plus</span></h2>
-              <p class="sports-subtitle">SPORTS MANAGEMENT PLATFORM</p>
+            <div class="game-league-tag">
+              Super Series Spring Tournament
             </div>
 
-            <div class="login-form-container">
-              <div class="input-field-group">
-                <label for="loginEmail">Email Address</label>
-                <input type="email" id="loginEmail" value="player@nascon.test" placeholder="name@domain.com">
-              </div>
-              <div class="input-field-group">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" value="Nascon@26" placeholder="••••••••">
-              </div>
+            <div class="game-matchup-row">
+              <span class="vs-tag">VS</span>
+              <span class="ball-emoji">🏀</span>
+              <span class="away-team-title">Good Hearts (Away)</span>
+            </div>
 
-              <div class="quick-roles-pills">
-                <span class="pills-title">Quick Demo Logins:</span>
-                <div class="pills-row">
-                  <button type="button" class="role-pill-btn active" data-role="player" data-email="player@nascon.test">Player</button>
-                  <button type="button" class="role-pill-btn" data-role="club_manager" data-email="manager@nascon.test">Manager</button>
-                  <button type="button" class="role-pill-btn" data-role="league_organizer" data-email="organizer@nascon.test">Organizer</button>
-                  <button type="button" class="role-pill-btn" data-role="super_admin" data-email="admin@nascon.test">Admin</button>
-                  <button type="button" class="role-pill-btn" data-role="viewer" data-email="viewer@nascon.test">Viewer</button>
+            <div class="game-location-box">
+              <div class="loc-details">
+                <span class="loc-pin">📍</span>
+                <div class="loc-text-col">
+                  <strong>Doyle Playing Basketball Court</strong>
+                  <span>8175 Regents Road San Diego, California United States</span>
                 </div>
               </div>
-
-              <button class="primary-login-btn" id="doLoginBtn">
-                <span>LOGIN</span>
-                <span class="btn-arrow">➔</span>
-              </button>
+              <button class="btn-navigate-arrow" id="directionsBtn" title="Directions">↗</button>
             </div>
+          </div>
 
-            <div class="login-kids-art">
-              <!-- Inline SVG of cute diverse kids playing sports -->
-              <svg viewBox="0 0 320 100" class="kids-illustration-svg" width="100%" height="90">
-                <!-- Kid 1: Girl with tennis racket -->
-                <circle cx="55" cy="40" r="10" fill="#6d4c41"/>
-                <circle cx="55" cy="40" r="9" fill="#ffcc80"/>
-                <path d="M48 35 Q55 25 62 35" fill="#3e2723"/>
-                <path d="M47 50 L63 50 L60 76 L50 76 Z" fill="#26a69a"/>
-                <line x1="60" y1="52" x2="72" y2="38" stroke="#ffcc80" stroke-width="3" stroke-linecap="round"/>
-                <ellipse cx="75" cy="34" rx="7" ry="11" fill="none" stroke="#546e7a" stroke-width="2"/>
-                <circle cx="78" cy="44" r="5" fill="#cddc39"/>
-                
-                <!-- Kid 2: Girl with soccer ball -->
-                <circle cx="110" cy="42" r="10" fill="#ffa726"/>
-                <circle cx="110" cy="42" r="9" fill="#ffe0b2"/>
-                <path d="M103 52 L117 52 L115 76 L105 76 Z" fill="#1e88e5"/>
-                <circle cx="124" cy="68" r="9" fill="#ffffff" stroke="#263238" stroke-width="1.5"/>
-                <polygon points="124,64 121,68 127,68" fill="#263238"/>
+          <!-- My Teams Section -->
+          <div class="section-heading-row">
+            <span class="sec-emoji">👥</span>
+            <h3 class="sec-heading-text">My Teams</h3>
+          </div>
 
-                <!-- Kid 3: Boy with basketball -->
-                <circle cx="165" cy="38" r="10" fill="#3e2723"/>
-                <circle cx="165" cy="38" r="9" fill="#ffcc80"/>
-                <path d="M158 48 L172 48 L170 74 L160 74 Z" fill="#ffffff"/>
-                <circle cx="165" cy="22" r="10" fill="#ff7043" stroke="#d84315" stroke-width="1.5"/>
-                <line x1="155" y1="22" x2="175" y2="22" stroke="#d84315" stroke-width="1.2"/>
-                <line x1="165" y1="12" x2="165" y2="32" stroke="#d84315" stroke-width="1.2"/>
-
-                <!-- Kid 4: Boy with rugby/football -->
-                <circle cx="215" cy="40" r="10" fill="#4e342e"/>
-                <circle cx="215" cy="40" r="9" fill="#d7ccc8"/>
-                <path d="M208 50 L222 50 L220 74 L210 74 Z" fill="#eceff1"/>
-                <ellipse cx="215" cy="74" rx="6" ry="10" fill="#8d6e63" stroke="#4e342e" stroke-width="1.5"/>
-                <line x1="215" y1="67" x2="215" y2="81" stroke="#ffffff" stroke-width="1.5"/>
-
-                <!-- Kid 5: Boy in baseball attire -->
-                <circle cx="265" cy="40" r="10" fill="#212121"/>
-                <circle cx="265" cy="40" r="9" fill="#ffe0b2"/>
-                <path d="M258 50 L272 50 L270 76 L260 76 Z" fill="#1565c0"/>
-                <path d="M276 44 Q284 46 280 54 Q273 52 276 44 Z" fill="#8d6e63"/>
-              </svg>
-            </div>
-
-            <div class="login-footer-url">
-              <a href="https://sportsplus.app" target="_blank" rel="noopener">https://sportsplus.app</a>
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
-          <!-- ================= SCREEN 2: MEMBER DASHBOARD ================= -->
-          <section class="screen-view" id="screenDashboard">
-            <!-- Curved User Header -->
-            <div class="member-header-curved">
-              <div class="member-top-actions">
-                <button class="header-icon-btn" id="dashMenuBtn">☰</button>
-                <div class="member-right-icons">
-                  <div class="bell-icon-badge" id="dashNotificationBtn">
-                    🔔<span class="badge-num">66</span>
-                  </div>
-                  <button class="header-icon-btn" id="dashOptionsBtn">⋮</button>
+          <div class="card my-teams-card" id="myTeamsCard">
+            <div class="teams-flex-row">
+              <div class="team-emblem-circle">🏀</div>
+              <div class="team-info-col">
+                <div class="team-status-line">
+                  <span class="player-tag">🏀 Player</span>
+                  <button class="kebab-btn">⋮</button>
+                </div>
+                <h4 class="team-primary-name">South Cardos</h4>
+                <div class="team-meta-line">
+                  <span>10-15 Years</span>
+                  <span class="bullet">•</span>
+                  <span>School Level</span>
                 </div>
               </div>
-
-              <div class="member-profile-info">
-                <div class="member-avatar-wrap">
-                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Darel Mitchel" class="member-avatar-img" id="memberAvatar">
-                </div>
-                <h2 class="member-name" id="memberName">Darel Mitchel</h2>
-                <span class="member-role-badge" id="memberRoleBadge">Player • South Cardos</span>
-              </div>
             </div>
+          </div>
 
-            <div class="dashboard-scrollable-body">
-              <!-- Updates Section -->
-              <div class="dash-card updates-card">
-                <div class="updates-header">
-                  <div class="updates-title-group">
-                    <span class="updates-icon">📰</span>
-                    <span class="updates-label">Updates</span>
-                  </div>
-                  <button class="updates-collapse-btn">▲</button>
-                </div>
-                <div class="updates-content">
-                  <span class="lightning-icon">⚡</span>
-                  <span class="updates-text">New season about to kickoff</span>
-                </div>
-              </div>
-
-              <!-- Next Game Section -->
-              <div class="section-title-wrap">
-                <span class="sec-icon">🏀</span>
-                <h3 class="section-title">Next Game</h3>
-              </div>
-
-              <div class="dash-card next-game-card" id="nextGameCard">
-                <div class="game-team-header">
-                  <span class="game-icon">🏀</span>
-                  <span class="game-home-name">South Cardos (Home)</span>
-                  <button class="rsvp-pill-btn" id="rsvpBtn">RSVP</button>
-                </div>
-
-                <div class="game-datetime-row">
-                  <span class="game-date">Friday, 07 April</span>
-                  <span class="game-time">09:00 AM - 10:00 AM</span>
-                </div>
-
-                <div class="game-tournament-name">
-                  Super Series Spring Tournament
-                </div>
-
-                <div class="game-vs-row">
-                  <span class="vs-badge">VS</span>
-                  <span class="vs-sport">🏀</span>
-                  <span class="game-away-name">Good Hearts (Away)</span>
-                </div>
-
-                <div class="game-venue-row">
-                  <div class="venue-info">
-                    <span class="venue-pin">📍</span>
-                    <div class="venue-address-block">
-                      <strong>Doyle Playing Basketball Court</strong>
-                      <span>8175 Regents Road San Diego, California United States</span>
-                    </div>
-                  </div>
-                  <button class="directions-btn" id="directionsBtn" title="Get Directions">
-                    ↗
-                  </button>
-                </div>
-              </div>
-
-              <!-- My Teams Section -->
-              <div class="section-title-wrap">
-                <span class="sec-icon">👥</span>
-                <h3 class="section-title">My Teams</h3>
-              </div>
-
-              <div class="dash-card my-team-card" id="myTeamCard">
-                <div class="team-card-inner">
-                  <div class="team-ball-circle">
-                    🏀
-                  </div>
-                  <div class="team-text-block">
-                    <div class="team-tag-row">
-                      <span class="team-role-tag">🏀 Player</span>
-                      <button class="more-kebab-btn">⋮</button>
-                    </div>
-                    <h4 class="team-title-name">South Cardos</h4>
-                    <div class="team-sub-details">
-                      <span>10-15 Years</span>
-                      <span class="divider-dot">•</span>
-                      <span>School Level</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Extra Competition Action Cards -->
-              <div class="quick-nav-grid">
-                <button class="quick-nav-card" id="quickFixturesBtn">
-                  <span class="qn-icon">📅</span>
-                  <span class="qn-title">Fixtures & Standings</span>
-                  <span class="qn-sub">Task A: Live Match</span>
-                </button>
-                <button class="quick-nav-card" id="quickStoreBtn">
-                  <span class="qn-icon">🛍️</span>
-                  <span class="qn-title">Official Store</span>
-                  <span class="qn-sub">Task B: Buy & Receipt</span>
-                </button>
-              </div>
-
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
-          <!-- ================= SCREEN 3: TEAM ROSTER ================= -->
-          <section class="screen-view" id="screenRoster">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="rosterBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label" id="rosterTeamName">North Stars</span>
-                <span class="page-sub">Roster</span>
-              </div>
-              <button class="header-icon-btn">☰</button>
-            </div>
-
-            <!-- Sub Navigation Buttons: LineUp vs Attendance -->
-            <div class="sub-nav-toggles">
-              <button class="sub-toggle-btn active" id="toggleLineUpBtn">
-                👥 LineUp
-              </button>
-              <button class="sub-toggle-btn" id="toggleAttendanceBtn">
-                📊 Attendance
-              </button>
-            </div>
-
-            <!-- Category Filter Tabs: Players / Staff / Parents -->
-            <div class="category-tabs-bar">
-              <button class="cat-tab-btn active" data-tab="players">Players</button>
-              <button class="cat-tab-btn" data-tab="staff">Staff</button>
-              <button class="cat-tab-btn" data-tab="parents">Parents</button>
-            </div>
-
-            <!-- Player List -->
-            <div class="roster-list-container" id="rosterListContainer">
-              <!-- Rendered via JS -->
-            </div>
-
-            <!-- Floating Action Button (+) Lime Green -->
-            <button class="fab-add-btn" id="fabAddPlayerBtn" title="Add Player / Roster Action">
-              +
+          <!-- Quick Navigation Cards -->
+          <div class="quick-cards-grid">
+            <button class="action-card-btn" id="quickSchedulesBtn">
+              <span class="action-emoji">📅</span>
+              <span class="action-title">Schedules</span>
+              <span class="action-caption">Matches & Standings</span>
             </button>
+            <button class="action-card-btn" id="quickStoreBtn">
+              <span class="action-emoji">🛍️</span>
+              <span class="action-title">Store</span>
+              <span class="action-caption">Official Jerseys</span>
+            </button>
+          </div>
+        </div>
+      </section>
 
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
+      <!-- ================= 3. TEAM ROSTER (Screenshot 3 & 5) ================= -->
+      <section class="screen-view" id="screenRoster">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="rosterBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline" id="rosterTeamTitle">North Stars</span>
+            <span class="bar-subline">Roster</span>
+          </div>
+          <button class="nav-action-icon" id="rosterFilterMenuBtn">☰</button>
+        </header>
+
+        <!-- Sub Toggles: LineUp / Attendance -->
+        <div class="segmented-sub-nav">
+          <button class="seg-btn active" id="toggleLineUpBtn">👥 LineUp</button>
+          <button class="seg-btn" id="toggleAttendanceBtn">📊 Attendance</button>
+        </div>
+
+        <!-- Filter Tabs: Players / Staff / Parents -->
+        <div class="pill-tabs-nav">
+          <button class="pill-tab active" data-tab="players">Players</button>
+          <button class="pill-tab" data-tab="staff">Staff</button>
+          <button class="pill-tab" data-tab="parents">Parents</button>
+        </div>
+
+        <!-- Player List Container -->
+        <div class="roster-items-container" id="rosterListContainer">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Floating Action Button (+) Lime Green -->
+        <button class="fab-btn" id="fabAddPlayerBtn" aria-label="Add Player / Action">+</button>
+      </section>
+
+      <!-- ================= 4. TEAM ATTENDANCE (Screenshot 4) ================= -->
+      <section class="screen-view" id="screenAttendance">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="attendanceBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline">North Stars</span>
+            <span class="bar-subline">Attendance</span>
+          </div>
+          <button class="nav-action-icon">☰</button>
+        </header>
+
+        <!-- Mode Toggles: Report / Update -->
+        <div class="attendance-top-bar">
+          <div class="att-segmented-control">
+            <button class="att-seg-btn active" id="attModeReport">Report</button>
+            <button class="att-seg-btn" id="attModeUpdate">Update</button>
+          </div>
+        </div>
+
+        <div class="attendance-filter-row">
+          <span class="filter-caption">Attendance (past 6 six months):</span>
+          <select class="filter-select" id="attScheduleFilter">
+            <option value="all">All Schedules ▾</option>
+            <option value="games">Games Only</option>
+            <option value="practices">Practices Only</option>
+          </select>
+        </div>
+
+        <!-- Attendance Data Table -->
+        <div class="attendance-table-viewport">
+          <table class="att-data-table" id="attTable">
+            <thead>
+              <tr>
+                <th class="col-refresh" id="refreshAttTableBtn" title="Refresh Table">🔄</th>
+                <th class="col-yes">Yes</th>
+                <th class="col-no">No</th>
+                <th class="col-maybe">Maybe/<br>Unknown</th>
+                <th class="col-excused">Excused</th>
+                <th class="col-medical">Medical</th>
+                <th class="col-late">Late</th>
+              </tr>
+            </thead>
+            <tbody id="attTableBody">
+              <!-- Injected via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= 5. FIXTURES & STANDINGS (Task A) ================= -->
+      <section class="screen-view" id="screenFixtures">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="fixturesBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline">Competition</span>
+            <span class="bar-subline">Fixtures & Standings</span>
+          </div>
+          <button class="nav-action-icon" id="refreshFixturesBtn">🔄</button>
+        </header>
+
+        <div class="segmented-sub-nav">
+          <button class="seg-btn active" id="tabFixturesBtn">Fixtures & Match</button>
+          <button class="seg-btn" id="tabStandingsBtn">Standings Table</button>
+        </div>
+
+        <div class="fixtures-content-area" id="fixturesContentArea">
+          <!-- Live Match Scoreboard Card -->
+          <div class="card live-match-card">
+            <div class="live-card-meta">
+              <span class="league-name">Super Series Spring Tournament</span>
+              <span class="live-pill">● LIVE</span>
             </div>
-          </section>
 
-          <!-- ================= SCREEN 4: TEAM ATTENDANCE ================= -->
-          <section class="screen-view" id="screenAttendance">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="attendanceBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label">North Stars</span>
-                <span class="page-sub">Attendance</span>
+            <div class="live-scoreboard-box">
+              <div class="team-score-side">
+                <span class="team-ball-icon">🏀</span>
+                <span class="team-name-label">South Cardos</span>
+                <span class="team-big-score" id="homeScore">78</span>
               </div>
-              <button class="header-icon-btn">☰</button>
+              <div class="score-center-col">
+                <span class="period-clock-tag">Q4 • 02:45</span>
+                <span class="vs-label">VS</span>
+              </div>
+              <div class="team-score-side">
+                <span class="team-ball-icon">🏀</span>
+                <span class="team-name-label">Good Hearts</span>
+                <span class="team-big-score" id="awayScore">74</span>
+              </div>
             </div>
 
-            <!-- Toggle Buttons: Report | Update -->
-            <div class="attendance-mode-toggles">
-              <button class="att-mode-btn active" id="attModeReport">Report</button>
-              <button class="att-mode-btn" id="attModeUpdate">Update</button>
+            <!-- Scoring Timeline -->
+            <div class="match-timeline-box">
+              <div class="timeline-head-row">
+                <strong>Event Timeline</strong>
+                <button class="btn-micro-action" id="organizerScoreBtn">+ Append Score</button>
+              </div>
+              <div class="timeline-items-list" id="matchTimeline">
+                <!-- Injected via JS -->
+              </div>
             </div>
 
-            <!-- Schedule Filter Dropdown -->
-            <div class="attendance-filter-bar">
-              <span class="filter-label">Attendance (past 6 six months):</span>
-              <select class="filter-dropdown" id="attScheduleFilter">
-                <option value="all">All Schedules ▾</option>
-                <option value="practice">Practices Only</option>
-                <option value="tournament">Tournaments Only</option>
-              </select>
+            <!-- Pinned Merchandise Showcase Slot -->
+            <div class="pinned-merch-box">
+              <div class="merch-left">
+                <span class="merch-icon">👕</span>
+                <div class="merch-meta">
+                  <strong>Alpha Home Jersey</strong>
+                  <span>Official Kit • PKR 4,500.00</span>
+                </div>
+              </div>
+              <button class="btn-buy-merch" id="pinnedBuyBtn">Buy</button>
             </div>
+          </div>
 
-            <!-- Attendance Data Table -->
-            <div class="attendance-table-container">
-              <table class="att-table" id="attTable">
+          <!-- Upcoming Matches List -->
+          <h4 class="sub-list-title">Upcoming Fixtures</h4>
+          <div class="fixtures-card-list" id="fixturesList">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Standings Table Container -->
+        <div class="standings-content-area" id="standingsContentArea" style="display:none;">
+          <div class="card standings-card">
+            <div class="standings-header">
+              <h4>Alpha League 1 Standings</h4>
+              <span>Top 2 Teams Qualify for Finals</span>
+            </div>
+            <div class="table-scroll-wrap">
+              <table class="standings-table">
                 <thead>
                   <tr>
-                    <th class="th-refresh" id="refreshAttTable" title="Refresh Table">🔄</th>
-                    <th class="th-yes">Yes</th>
-                    <th class="th-no">No</th>
-                    <th class="th-maybe">Maybe/<br>Unknown</th>
-                    <th class="th-excused">Excused</th>
-                    <th class="th-medical">Medical</th>
-                    <th class="th-late">Late</th>
+                    <th>#</th>
+                    <th>Team</th>
+                    <th>P</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
+                    <th>Diff</th>
+                    <th>PTS</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
-                <tbody id="attTableBody">
-                  <!-- Rendered dynamically -->
+                <tbody id="standingsTableBody">
+                  <!-- Injected via JS -->
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
+      <!-- ================= 6. OFFICIAL STORE (Task B) ================= -->
+      <section class="screen-view" id="screenStore">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="storeBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline">Official Store</span>
+            <span class="bar-subline">Club Merchandise</span>
+          </div>
+          <div class="cart-trigger-btn" id="openCartBtn">
+            🛒<span class="cart-badge-count" id="cartCountBadge">0</span>
+          </div>
+        </header>
 
-          <!-- ================= SCREEN 5: FIXTURES & STANDINGS (TASK A) ================= -->
-          <section class="screen-view" id="screenFixtures">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="fixturesBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label">Competition</span>
-                <span class="page-sub">Fixtures & Standings</span>
-              </div>
-              <button class="header-icon-btn" id="refreshFixturesBtn">🔄</button>
-            </div>
+        <div class="store-scroll-area">
+          <div class="store-promo-banner">
+            <h3>New Season Gear</h3>
+            <p>Use discount code <strong>WELCOME10</strong> for 10% off</p>
+          </div>
 
-            <div class="fixtures-tabs">
-              <button class="fix-tab-btn active" id="tabFixturesBtn">Fixtures & Live Match</button>
-              <button class="fix-tab-btn" id="tabStandingsBtn">League Standings</button>
-            </div>
+          <div class="products-grid" id="productsGrid">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </section>
 
-            <div class="fixtures-scroll-view" id="fixturesScrollView">
-              <!-- Live Match Detail Card -->
-              <div class="match-detail-card" id="matchDetailCard">
-                <div class="match-detail-header">
-                  <span class="league-chip">Super Series Spring Tournament</span>
-                  <span class="match-status-chip live" id="matchLiveChip">● LIVE</span>
-                </div>
+      <!-- ================= 7. CHAT SCREEN ================= -->
+      <section class="screen-view" id="screenChat">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="chatBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline">South Cardos</span>
+            <span class="bar-subline">Team Chat</span>
+          </div>
+          <button class="nav-action-icon">⋮</button>
+        </header>
 
-                <div class="match-score-scoreboard">
-                  <div class="team-box home">
-                    <span class="score-team-logo">🏀</span>
-                    <strong class="score-team-name">South Cardos</strong>
-                    <span class="score-digits" id="homeScore">78</span>
-                  </div>
-                  <div class="score-vs-divider">
-                    <span class="quarter-text" id="quarterText">Q4 • 02:45</span>
-                    <span class="vs-text">VS</span>
-                  </div>
-                  <div class="team-box away">
-                    <span class="score-team-logo">🏀</span>
-                    <strong class="score-team-name">Good Hearts</strong>
-                    <span class="score-digits" id="awayScore">74</span>
-                  </div>
-                </div>
-
-                <!-- Live Events Timeline -->
-                <div class="events-timeline-section">
-                  <div class="timeline-header">
-                    <h4>Live Match Events</h4>
-                    <button class="score-action-btn" id="organizerAddScoreBtn">+ Add Score</button>
-                  </div>
-                  <div class="timeline-events-list" id="timelineEventsList">
-                    <!-- Events injected via JS -->
-                  </div>
-                </div>
-
-                <!-- Pinned Product Slot -->
-                <div class="pinned-product-card" id="pinnedProductCard">
-                  <div class="product-badge">Official Merch</div>
-                  <div class="product-info-row">
-                    <div class="product-icon-wrap">👕</div>
-                    <div class="product-meta">
-                      <strong>Alpha Home Jersey</strong>
-                      <span>Official 2026 Season Kit • PKR 4,500.00</span>
-                    </div>
-                    <button class="pinned-buy-btn" id="pinnedBuyBtn">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Other Fixtures List -->
-              <h4 class="sub-section-heading">Upcoming & Past Fixtures</h4>
-              <div class="fixtures-list" id="fixturesList">
-                <!-- Rendered dynamically -->
-              </div>
-            </div>
-
-            <!-- Standings View (Hidden by default, toggled via tab) -->
-            <div class="standings-scroll-view" id="standingsScrollView" style="display:none;">
-              <div class="standings-card">
-                <div class="standings-card-header">
-                  <h4>Alpha League 1 — Points Table</h4>
-                  <span class="standings-sub">Top 2 Qualify for Finals</span>
-                </div>
-                <div class="table-responsive">
-                  <table class="standings-table" id="standingsTable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Team</th>
-                        <th>P</th>
-                        <th>W</th>
-                        <th>D</th>
-                        <th>L</th>
-                        <th>Diff</th>
-                        <th>PTS</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="standingsTableBody">
-                      <!-- Standings rows -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
-          <!-- ================= SCREEN 6: STORE & CHECKOUT (TASK B) ================= -->
-          <section class="screen-view" id="screenStore">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="storeBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label">Official Store</span>
-                <span class="page-sub">Club Merchandise</span>
-              </div>
-              <div class="cart-icon-btn" id="cartOpenBtn">
-                🛒<span class="cart-count-badge" id="cartCountBadge">0</span>
-              </div>
-            </div>
-
-            <div class="store-scroll-view">
-              <div class="store-hero-banner">
-                <div class="store-hero-text">
-                  <h3>New Season Gear</h3>
-                  <p>Get 10% off with promo code <strong>WELCOME10</strong></p>
-                </div>
-              </div>
-
-              <div class="product-catalogue-grid" id="productCatalogueGrid">
-                <!-- Products injected via JS -->
-              </div>
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
-          <!-- ================= SCREEN 7: CHAT ================= -->
-          <section class="screen-view" id="screenChat">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="chatBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label">South Cardos</span>
-                <span class="page-sub">Team Chat</span>
-              </div>
-              <button class="header-icon-btn">⋮</button>
-            </div>
-
-            <div class="chat-messages-container" id="chatMessages">
-              <div class="chat-message them">
-                <div class="chat-avatar">👔</div>
-                <div class="chat-bubble">
-                  <span class="chat-sender">Coach Miller</span>
-                  <p>Great practice session yesterday everyone! Don't forget Friday's kickoff against Good Hearts at 9 AM sharp.</p>
-                  <span class="chat-time">Yesterday, 5:42 PM</span>
-                </div>
-              </div>
-
-              <div class="chat-message them">
-                <div class="chat-avatar">🏃</div>
-                <div class="chat-bubble">
-                  <span class="chat-sender">John Burgess</span>
-                  <p>Ready to go Coach! Jersey washed and packed.</p>
-                  <span class="chat-time">Today, 8:15 AM</span>
-                </div>
-              </div>
-
-              <div class="chat-message me">
-                <div class="chat-bubble">
-                  <p>Looking forward to it! See you all on the court.</p>
-                  <span class="chat-time">Today, 9:20 AM</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="chat-input-bar">
-              <input type="text" id="chatInput" placeholder="Type a message...">
-              <button class="send-chat-btn" id="sendChatBtn">➤</button>
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
-          <!-- ================= SCREEN 8: INBOX ================= -->
-          <section class="screen-view" id="screenInbox">
-            <div class="top-nav-header">
-              <button class="header-back-btn" id="inboxBackBtn">‹</button>
-              <div class="header-team-title">
-                <span class="team-label">Inbox</span>
-                <span class="page-sub">Notifications & Alerts</span>
-              </div>
-              <button class="header-icon-btn" id="clearInboxBtn">✓</button>
-            </div>
-
-            <div class="inbox-list-container" id="inboxList">
-              <div class="inbox-item unread">
-                <div class="inbox-icon-box">🔔</div>
-                <div class="inbox-content">
-                  <div class="inbox-header-row">
-                    <strong>Match Scheduled</strong>
-                    <span class="inbox-time">10m ago</span>
-                  </div>
-                  <p>Next match confirmed vs Good Hearts on Friday, 07 April 09:00 AM.</p>
-                </div>
-              </div>
-
-              <div class="inbox-item unread">
-                <div class="inbox-icon-box green">📝</div>
-                <div class="inbox-content">
-                  <div class="inbox-header-row">
-                    <strong>Roster Update</strong>
-                    <span class="inbox-time">2h ago</span>
-                  </div>
-                  <p>Coach registered new player Addison Burns (#12) to the active lineup.</p>
-                </div>
-              </div>
-
-              <div class="inbox-item">
-                <div class="inbox-icon-box blue">🛍️</div>
-                <div class="inbox-content">
-                  <div class="inbox-header-row">
-                    <strong>Merchandise Discount</strong>
-                    <span class="inbox-time">1d ago</span>
-                  </div>
-                  <p>Use code WELCOME10 for 10% off new season Alpha Home Jerseys.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Virtual Android Navigation Bar -->
-            <div class="android-nav-bar">
-              <span class="android-nav-btn">◁</span>
-              <span class="android-nav-btn">○</span>
-              <span class="android-nav-btn">□</span>
-            </div>
-          </section>
-
+        <div class="chat-flow-viewport" id="chatMessages">
+          <!-- Chat messages injected -->
         </div>
 
-        <!-- BOTTOM NAVIGATION BAR (Screenshots 2, 3, 4) -->
-        <nav class="bottom-nav-bar" id="bottomNavBar">
-          <button class="nav-item-btn active" data-target="screenDashboard" id="navHome">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">Home</span>
-          </button>
-          <button class="nav-item-btn" data-target="screenFixtures" id="navSchedules">
-            <span class="nav-icon">📅</span>
-            <span class="nav-label">Schedules</span>
-          </button>
-          <button class="nav-item-btn" data-target="screenRoster" id="navRoster">
-            <span class="nav-icon">👥</span>
-            <span class="nav-label">Roster</span>
-          </button>
-          <button class="nav-item-btn" data-target="screenChat" id="navChat">
-            <span class="nav-icon">💬</span>
-            <span class="nav-label">Chat</span>
-          </button>
-          <button class="nav-item-btn" data-target="screenInbox" id="navInbox">
-            <span class="nav-icon-wrap">
-              <span class="nav-icon">✉️</span>
-              <span class="nav-badge-red" id="navInboxBadge">34</span>
-            </span>
-            <span class="nav-label">Inbox</span>
-          </button>
-        </nav>
+        <div class="chat-composer-bar">
+          <input type="text" id="chatInput" placeholder="Message South Cardos..." autocomplete="off">
+          <button class="btn-send-message" id="sendChatBtn">➤</button>
+        </div>
+      </section>
 
+      <!-- ================= 8. INBOX SCREEN ================= -->
+      <section class="screen-view" id="screenInbox">
+        <header class="native-app-bar primary">
+          <button class="nav-back-icon" id="inboxBackBtn" aria-label="Back">‹</button>
+          <div class="app-bar-col">
+            <span class="bar-headline">Inbox</span>
+            <span class="bar-subline">Notifications</span>
+          </div>
+          <button class="nav-action-icon" id="clearInboxBtn">✓</button>
+        </header>
+
+        <div class="inbox-items-scroll" id="inboxItemsList">
+          <!-- Inbox items injected -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- NATIVE 5-ITEM BOTTOM NAVIGATION BAR (Screenshots 2, 3, 4) -->
+    <nav class="native-bottom-bar" id="bottomNavBar">
+      <button class="bottom-tab-btn active" data-screen="screenDashboard" id="navHome">
+        <span class="tab-icon">🏠</span>
+        <span class="tab-label">Home</span>
+      </button>
+      <button class="bottom-tab-btn" data-screen="screenFixtures" id="navSchedules">
+        <span class="tab-icon">📅</span>
+        <span class="tab-label">Schedules</span>
+      </button>
+      <button class="bottom-tab-btn" data-screen="screenRoster" id="navRoster">
+        <span class="tab-icon">👥</span>
+        <span class="tab-label">Roster</span>
+      </button>
+      <button class="bottom-tab-btn" data-screen="screenChat" id="navChat">
+        <span class="tab-icon">💬</span>
+        <span class="tab-label">Chat</span>
+      </button>
+      <button class="bottom-tab-btn" data-screen="screenInbox" id="navInbox">
+        <span class="tab-icon-relative">
+          <span class="tab-icon">✉️</span>
+          <span class="tab-badge" id="inboxBadge">34</span>
+        </span>
+        <span class="tab-label">Inbox</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ================= IN-APP DRAWER MENU ================= -->
+  <div class="drawer-overlay" id="drawerOverlay" style="display:none;">
+    <aside class="app-drawer" id="appDrawer">
+      <div class="drawer-header">
+        <div class="drawer-profile-row">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="drawer-avatar">
+          <div class="drawer-profile-meta">
+            <strong id="drawerUserName">Darel Mitchel</strong>
+            <span id="drawerUserRole">Player • South Cardos</span>
+          </div>
+        </div>
+        <button class="drawer-close-btn" id="closeDrawerBtn">✕</button>
       </div>
-    </div>
-  </main>
 
-  <!-- ================= MODALS & DRAWERS ================= -->
+      <div class="drawer-content">
+        <!-- Switch Role Section -->
+        <div class="drawer-section">
+          <span class="section-label">Active Role & Context</span>
+          <div class="drawer-role-options">
+            <button class="drawer-role-btn active" data-role="player" data-email="player@nascon.test">
+              🏃 Player (Darel Mitchel)
+            </button>
+            <button class="drawer-role-btn" data-role="club_manager" data-email="manager@nascon.test">
+              👔 Club Manager (Marcus Ray)
+            </button>
+            <button class="drawer-role-btn" data-role="league_organizer" data-email="organizer@nascon.test">
+              📋 League Organizer (Sarah Jenkins)
+            </button>
+            <button class="drawer-role-btn" data-role="super_admin" data-email="admin@nascon.test">
+              👑 Platform Super Admin
+            </button>
+            <button class="drawer-role-btn" data-role="viewer" data-email="viewer@nascon.test">
+              👁️ General Viewer
+            </button>
+          </div>
+        </div>
 
-  <!-- Roster Action Modal (Add/Transfer/Loan/Release) -->
-  <div class="modal-backdrop" id="rosterActionModal" style="display:none;">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3 id="rosterModalTitle">Roster Management</h3>
-        <button class="modal-close-btn" id="closeRosterModal">✕</button>
+        <!-- Network & Offline Simulator Section -->
+        <div class="drawer-section">
+          <span class="section-label">Connectivity Simulator</span>
+          <div class="connectivity-card">
+            <div class="conn-status-row">
+              <span>Network State:</span>
+              <strong id="drawerNetworkText" class="status-online">🟢 Online</strong>
+            </div>
+            <label class="toggle-switch-row">
+              <span>Simulate Airplane Mode</span>
+              <input type="checkbox" id="airplaneModeToggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Offline Queue Status -->
+        <div class="drawer-section">
+          <div class="queue-status-head">
+            <span class="section-label">Pending Sync Queue</span>
+            <span class="queue-counter" id="drawerQueueCounter">0 items</span>
+          </div>
+          <button class="btn-drawer-sync" id="drawerSyncNowBtn">
+            🔄 Sync Pending Actions
+          </button>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="drawer-section">
+          <span class="section-label">Quick Screens</span>
+          <div class="drawer-menu-list">
+            <button class="drawer-nav-item" data-target="screenLogin">🔐 Switch Account / Login</button>
+            <button class="drawer-nav-item" data-target="screenStore">🛍️ Official Merch Store</button>
+            <button class="drawer-nav-item" data-target="screenFixtures">📊 Standings & Fixtures</button>
+            <button class="drawer-nav-item" data-target="screenRoster">👥 Team Roster</button>
+            <button class="drawer-nav-item" data-target="screenAttendance">📋 Team Attendance</button>
+          </div>
+        </div>
+
+        <!-- Reset Database Button -->
+        <div class="drawer-footer">
+          <button class="btn-reset-db" id="drawerResetDbBtn">
+            ⚠️ Reset Database to Baseline (Seed 42)
+          </button>
+        </div>
       </div>
-      <div class="modal-body">
-        <div class="modal-tabs">
-          <button class="modal-tab-btn active" id="modalTabTransfer">Transfer</button>
-          <button class="modal-tab-btn" id="modalTabLoan">Loan</button>
-          <button class="modal-tab-btn" id="modalTabRelease">Release</button>
-          <button class="modal-tab-btn" id="modalTabAdd">Add Player</button>
+    </aside>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Roster Management Modal (Add / Transfer / Loan / Release) -->
+  <div class="native-modal-backdrop" id="rosterActionModal" style="display:none;">
+    <div class="native-modal-card">
+      <div class="modal-card-header">
+        <h3 id="rosterModalTitle">Roster Action</h3>
+        <button class="btn-close-modal" id="closeRosterModal">✕</button>
+      </div>
+      <div class="modal-card-body">
+        <div class="action-tab-selector">
+          <button class="act-tab active" data-action="transfer">Transfer</button>
+          <button class="act-tab" data-action="loan">Loan</button>
+          <button class="act-tab" data-action="release">Release</button>
+          <button class="act-tab" data-action="add">Add Player</button>
         </div>
 
         <form id="rosterActionForm">
-          <div class="input-field-group">
+          <div class="form-group" id="selectPlayerGroup">
             <label for="rosterPlayerSelect">Select Player</label>
             <select id="rosterPlayerSelect" class="form-select">
               <!-- Injected dynamically -->
             </select>
           </div>
 
-          <div class="input-field-group" id="targetSquadGroup">
+          <div class="form-group" id="targetSquadGroup">
             <label for="rosterTargetSquad">Destination Squad</label>
             <select id="rosterTargetSquad" class="form-select">
               <option value="squad-alpha-1">Alpha United (Senior)</option>
@@ -745,29 +650,24 @@
             </select>
           </div>
 
-          <div class="input-field-group" id="loanDurationGroup" style="display:none;">
+          <div class="form-group" id="loanDurationGroup" style="display:none;">
             <label for="loanEndDate">Loan End Date</label>
             <input type="date" id="loanEndDate" class="form-input" value="2026-12-31">
           </div>
 
-          <div class="input-field-group" id="newPlayerNameGroup" style="display:none;">
-            <label for="newPlayerName">Player Full Name</label>
+          <div class="form-group" id="newPlayerGroup" style="display:none;">
+            <label for="newPlayerName">Full Name</label>
             <input type="text" id="newPlayerName" class="form-input" placeholder="e.g. Leo Parker">
-            <label for="newPlayerPosition" style="margin-top:8px;">Position</label>
-            <select id="newPlayerPosition" class="form-select">
-              <option value="gk">Goalkeeper / Center</option>
-              <option value="df">Defender / Forward</option>
-              <option value="mf">Midfielder / Guard</option>
-              <option value="fw">Striker / Point Guard</option>
+            <label for="newPlayerPos" style="margin-top:8px;">Position</label>
+            <select id="newPlayerPos" class="form-select">
+              <option value="gk">Guard / GK</option>
+              <option value="df">Forward / DF</option>
+              <option value="mf">Center / MF</option>
             </select>
           </div>
 
-          <div class="offline-warning-chip" id="offlineActionNotice" style="display:none;">
-            ✈️ Airplane Mode active: Action will be stored in local persistent queue and synced when reconnected.
-          </div>
-
-          <button type="submit" class="primary-action-btn" id="submitRosterActionBtn">
-            Confirm Roster Action
+          <button type="submit" class="btn-confirm-action" id="submitRosterBtn">
+            Confirm Action
           </button>
         </form>
       </div>
@@ -775,93 +675,68 @@
   </div>
 
   <!-- Cart & Checkout Modal (Task B) -->
-  <div class="modal-backdrop" id="checkoutModal" style="display:none;">
-    <div class="modal-sheet">
-      <div class="modal-header">
+  <div class="native-modal-backdrop" id="checkoutModal" style="display:none;">
+    <div class="native-modal-card">
+      <div class="modal-card-header">
         <h3>Cart & Checkout</h3>
-        <button class="modal-close-btn" id="closeCheckoutModal">✕</button>
+        <button class="btn-close-modal" id="closeCheckoutModal">✕</button>
       </div>
-      <div class="modal-body">
-        <div class="cart-items-list" id="cartItemsList">
+      <div class="modal-card-body">
+        <div class="cart-items-summary" id="cartItemsList">
           <!-- Injected dynamically -->
         </div>
 
-        <div class="discount-code-row">
-          <input type="text" id="discountCodeInput" placeholder="Discount Code (e.g. WELCOME10)" value="WELCOME10">
-          <button type="button" class="apply-code-btn" id="applyDiscountBtn">Apply</button>
+        <div class="promo-code-input-row">
+          <input type="text" id="discountCodeInput" placeholder="Promo code" value="WELCOME10">
+          <button type="button" class="btn-apply-code" id="applyDiscountBtn">Apply</button>
         </div>
 
-        <div class="cart-summary-box">
-          <div class="summary-row">
+        <div class="pricing-summary-card">
+          <div class="summary-line">
             <span>Subtotal</span>
             <span id="cartSubtotal">PKR 4,500.00</span>
           </div>
-          <div class="summary-row discount">
+          <div class="summary-line green">
             <span>Discount (10%)</span>
             <span id="cartDiscount">-PKR 450.00</span>
           </div>
-          <div class="summary-row total">
-            <strong>Total Amount</strong>
+          <div class="summary-line total">
+            <strong>Total</strong>
             <strong id="cartTotal">PKR 4,050.00</strong>
           </div>
         </div>
 
-        <div class="payment-gateway-select">
-          <label>Mock Gateway Token:</label>
+        <div class="form-group">
+          <label>Payment Token:</label>
           <select id="paymentTokenSelect" class="form-select">
-            <option value="tok_success">tok_success (Payment Approved)</option>
+            <option value="tok_success">tok_success (Approved)</option>
             <option value="tok_declined">tok_declined (Card Declined 402)</option>
             <option value="tok_capture_fail">tok_capture_fail (Capture Failed 402)</option>
           </select>
         </div>
 
-        <button class="primary-action-btn" id="processCheckoutBtn">
-          Pay & Generate Receipt
+        <button type="button" class="btn-confirm-action" id="processCheckoutBtn">
+          Confirm Payment & Generate Receipt
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Receipt Modal (Task B output) -->
-  <div class="modal-backdrop" id="receiptModal" style="display:none;">
-    <div class="modal-sheet receipt-sheet">
-      <div class="modal-header">
+  <!-- Order Receipt Modal (Task B) -->
+  <div class="native-modal-backdrop" id="receiptModal" style="display:none;">
+    <div class="native-modal-card receipt-card">
+      <div class="modal-card-header">
         <h3>Order Receipt</h3>
-        <button class="modal-close-btn" id="closeReceiptModal">✕</button>
+        <button class="btn-close-modal" id="closeReceiptModal">✕</button>
       </div>
-      <div class="modal-body receipt-body" id="receiptContentArea">
+      <div class="modal-card-body" id="receiptContent">
         <!-- Injected dynamically -->
       </div>
     </div>
   </div>
 
-  <!-- Offline Actions Drawer / Inspector (Task C) -->
-  <div class="modal-backdrop" id="offlineQueueModal" style="display:none;">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <h3>Offline Persistent Queue</h3>
-        <button class="modal-close-btn" id="closeQueueModal">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="queue-desc">Actions performed in Airplane Mode are stored persistently in localStorage (§5.14 schema) and survive app reloads.</p>
-        <div class="queue-list" id="queueItemsList">
-          <!-- Queue items injected -->
-        </div>
-
-        <div class="queue-actions-row">
-          <button class="primary-action-btn" id="syncNowBtn">
-            Sync Now With Backend
-          </button>
-          <button class="clear-queue-btn" id="clearQueueBtn">
-            Clear Queue
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- Toast Notification Anchor -->
+  <div class="native-toast-anchor" id="toastContainer"></div>
 
   <script src="app.js"></script>
 </body>
