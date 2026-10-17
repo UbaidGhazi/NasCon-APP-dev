@@ -1,0 +1,10 @@
+node_modules/
+coverage/
+.env
+*.log
+.DS_Store
+
+# Flutter build output — but the release APK IS committed (graded deliverable)
+mobile/build/
+mobile/.dart_tool/
+!mobile/release/app-release.apk
